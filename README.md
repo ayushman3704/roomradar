@@ -128,7 +128,7 @@ Features:
 
 ## Project Structure
 
-text
+```text
 RoomRadar/
 │
 ├── Backend/
@@ -156,13 +156,14 @@ RoomRadar/
 │   └── package.json
 │
 └── README.md
+```
 
 
 
 
 ## Core Workflow
 
-text
+```text
 User Registration
         ↓
 Profile Setup
@@ -178,7 +179,7 @@ Automatic Chat Room Creation
 Real-Time Messaging
         ↓
 Reviews & Reputation
-
+```
 
 
 
@@ -207,51 +208,57 @@ The final compatibility score is generated using:
 
 ### Authentication
 
-http
+```http
 POST /api/auth/register
 POST /api/auth/login
 POST /api/auth/logout
 GET  /api/auth/me
+```
 
 
 ### Profile
 
-http
+```http
 GET  /api/users/profile
 PUT  /api/users/profile
 GET  /api/users/:userId
+```
 
 
 ### Matching
 
-http
+```http
 GET /api/matches
+```
 
 
 ### Connections
 
-http
+```http
 POST /api/connections/request
 GET  /api/connections/requests
 GET  /api/connections/sent
 GET  /api/connections
 PUT  /api/connections/:connectionId/accept
 PUT  /api/connections/:connectionId/reject
+```
 
 
 ### Chat
 
-http
+```http
 GET  /api/chat/rooms
 GET  /api/chat/:roomId/messages
 POST /api/chat/:roomId/messages
 PUT  /api/chat/:roomId/read
+```
 
 ### Reviews
 
-http
+```http
 POST /api/reviews
 GET  /api/users/:userId/reputation
+```
 
 
 ## Current Status
@@ -282,22 +289,24 @@ GET  /api/users/:userId/reputation
 
 ### Backend
 
-bash
+```bash
 cd Backend
 
 npm install
 
 npm run dev
+```
 
 
 ### Frontend
 
-bash
+```bash
 cd roomradar-frontend
 
 npm install
 
 npm run dev
+```
 
 
 
@@ -306,7 +315,7 @@ npm run dev
 
 ### Backend
 
-env
+```env
 PORT=5000
 
 MONGODB_URI=your_mongodb_connection_string
@@ -314,14 +323,16 @@ MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 
 CLIENT_URL=http://localhost:5173
+```
 
 
 ### Frontend
 
-env
+```env
 VITE_API_URL=http://localhost:5000/api
 
 VITE_SOCKET_URL=http://localhost:5000
+```
 
 
 
