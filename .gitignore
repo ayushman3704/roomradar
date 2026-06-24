@@ -1,0 +1,15 @@
+# Backend
+Backend/node_modules
+Backend/.env
+
+# Frontend
+roomradar-frontend/node_modules
+roomradar-frontend/dist
+roomradar-frontend/.env
+
+# IDE
+.vscode
+
+# OS
+.DS_Store
+Thumbs.db
