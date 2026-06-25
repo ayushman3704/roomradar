@@ -7,6 +7,10 @@ import asyncHandler from "../utils/asyncHandler.js";
 
 import { calculateCompatibility } from "../services/compatibility.service.js";
 
+import { MATCH_RANKING_CONFIG } from "../constants/compatibility.constants.js";
+
+const { LIFESTYLE_WEIGHT, TRUST_SCORE_WEIGHT } = MATCH_RANKING_CONFIG;
+
 /*
 |--------------------------------------------------------------------------
 | Send Connection Request
@@ -92,6 +96,14 @@ export const sendConnectionRequest = asyncHandler(async (req, res) => {
 
   const compatibility = calculateCompatibility(requester, recipient);
 
+  const finalScore =
+  Math.round(
+    compatibility.score *
+      LIFESTYLE_WEIGHT +
+      recipient.trustScore *
+      TRUST_SCORE_WEIGHT
+  );
+
   /*
     |--------------------------------------------------------------------------
     | Create Connection
@@ -103,7 +115,7 @@ export const sendConnectionRequest = asyncHandler(async (req, res) => {
 
     recipient: recipientId,
 
-    compatibilityScore: compatibility.score,
+    compatibilityScore: finalScore,
 
     message,
   });
