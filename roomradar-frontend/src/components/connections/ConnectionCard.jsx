@@ -1,9 +1,11 @@
-import { useNavigate }
-  from "react-router-dom";
-
 import {
+  useNavigate,
   Link,
 } from "react-router-dom";
+
+import {
+  usePresence,
+} from "../../context/PresenceContext";
 
 const ConnectionCard = ({
   connection,
@@ -11,6 +13,15 @@ const ConnectionCard = ({
 
   const navigate =
     useNavigate();
+
+  const {
+    isOnline,
+  } = usePresence();
+
+  const online =
+    isOnline(
+      connection.user.id
+    );
 
   const openChat =
     () => {
@@ -25,6 +36,8 @@ const ConnectionCard = ({
 
       <div className="flex justify-between items-start">
 
+        {/* Left Side */}
+
         <div>
 
           <h2 className="text-xl font-bold">
@@ -33,7 +46,35 @@ const ConnectionCard = ({
 
           </h2>
 
-          <p className="text-gray-500">
+          {/* Online Status */}
+
+          <div className="flex items-center gap-2 mt-2">
+
+            <span
+              className={`w-2.5 h-2.5 rounded-full ${
+                online
+                  ? "bg-green-500"
+                  : "bg-gray-400"
+              }`}
+            />
+
+            <span
+              className={`text-sm font-medium ${
+                online
+                  ? "text-green-600"
+                  : "text-gray-500"
+              }`}
+            >
+
+              {online
+                ? "Online"
+                : "Offline"}
+
+            </span>
+
+          </div>
+
+          <p className="text-gray-500 mt-2">
 
             {connection.user.city}
 
@@ -41,25 +82,24 @@ const ConnectionCard = ({
 
         </div>
 
+        {/* Right Side */}
+
         <div className="text-right">
 
           <div className="text-blue-600 text-xl font-bold">
 
-            {
-              connection.compatibilityScore
-            }
-            %
+            {connection.compatibilityScore}%
 
           </div>
 
           <div className="text-sm text-gray-500">
 
-            Trust:
-            {" "}
-            {
-              connection.user
-                .trustScore
-            }
+            Trust{" "}
+            <span className="font-medium">
+
+              {connection.user.trustScore}
+
+            </span>
 
           </div>
 
@@ -67,10 +107,11 @@ const ConnectionCard = ({
 
       </div>
 
+      {/* Connected Date */}
+
       <div className="mt-4 text-sm text-gray-500">
 
-        Connected:
-        {" "}
+        Connected{" "}
 
         {new Date(
           connection.connectedAt
@@ -78,53 +119,66 @@ const ConnectionCard = ({
 
       </div>
 
+      {/* Actions */}
+
       <div className="mt-6 space-y-3">
 
-  <button
-    onClick={openChat}
-    className="
-      w-full
-      bg-blue-600
-      text-white
-      py-3
-      rounded-lg
-      hover:bg-blue-700
-    "
-  >
-    Open Chat
-  </button>
+        <button
+          onClick={openChat}
+          className="
+            w-full
+            bg-blue-600
+            text-white
+            py-3
+            rounded-lg
+            hover:bg-blue-700
+            transition-colors
+          "
+        >
 
-  <Link
-    to={`/reputation/${connection.user.id}`}
-    className="
-      block
-      w-full
-      text-center
-      border
-      border-gray-300
-      py-3
-      rounded-lg
-      hover:bg-gray-50
-    "
-  >
-    View Reputation
-  </Link>
+          Open Chat
 
-  <Link
-  to={`/reviews/${connection.user.id}/${connection.connectionId}`}
-  className="
-    block
-    text-center
-    border
-    py-3
-    rounded-lg
-    hover:bg-gray-50
-  "
->
-  Leave Review
-</Link>
+        </button>
 
-</div>
+        <Link
+          to={`/reputation/${connection.user.id}`}
+          className="
+            block
+            w-full
+            text-center
+            border
+            border-gray-300
+            py-3
+            rounded-lg
+            hover:bg-gray-50
+            transition-colors
+          "
+        >
+
+          View Reputation
+
+        </Link>
+
+        <Link
+          to={`/reviews/${connection.user.id}/${connection.connectionId}`}
+          className="
+            block
+            w-full
+            text-center
+            border
+            border-gray-300
+            py-3
+            rounded-lg
+            hover:bg-gray-50
+            transition-colors
+          "
+        >
+
+          Leave Review
+
+        </Link>
+
+      </div>
 
     </div>
   );
