@@ -8,10 +8,10 @@ import asyncHandler from "../utils/asyncHandler.js";
 const protect = asyncHandler(
   async (req, res, next) => {
 
-    console.log(
-  "Cookies:",
-  req.cookies
-);
+//     console.log(
+//   "Cookies:",
+//   req.cookies
+// );
 
     const token = req.cookies?.token;
 
