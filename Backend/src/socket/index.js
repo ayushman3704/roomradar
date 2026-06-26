@@ -41,9 +41,9 @@ export const initializeSocket = (
 
   io.on("connection", (socket) => {
 
-  console.log(
-    `Socket Connected: ${socket.id}`
-  );
+  // console.log(
+  //   `Socket Connected: ${socket.id}`
+  // );
 
   /*
 |--------------------------------------------------------------------------
@@ -65,9 +65,9 @@ socket.on(
   socket.id
 );
 
-console.log(
-  `🟢 User Online: ${userId}`
-);
+// console.log(
+//   `🟢 User Online: ${userId}`
+// );
 
 /*
 |--------------------------------------------------------------------------
@@ -104,9 +104,9 @@ io.emit(
         roomId
       );
 
-      console.log(
-        `Socket ${socket.id} joined room ${roomId}`
-      );
+      // console.log(
+      //   `Socket ${socket.id} joined room ${roomId}`
+      // );
     }
   );
 
@@ -177,10 +177,10 @@ const populatedMessage =
   }
 );
 
-      console.log(
-        "Message Saved:",
-        message._id
-      );
+      // console.log(
+      //   "Message Saved:",
+      //   message._id
+      // );
 
     } catch (error) {
 
@@ -207,9 +207,9 @@ socket.on(
         socket.userId
       );
 
-      console.log(
-        `⚫ User Offline: ${socket.userId}`
-      );
+      // console.log(
+      //   `⚫ User Offline: ${socket.userId}`
+      // );
 
       io.emit(
         "user_offline",
@@ -217,9 +217,9 @@ socket.on(
       );
     }
 
-    console.log(
-      `Socket Disconnected: ${socket.id}`
-    );
+    // console.log(
+    //   `Socket Disconnected: ${socket.id}`
+    // );
   }
 );
 
