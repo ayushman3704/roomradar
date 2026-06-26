@@ -1,10 +1,12 @@
-// console.log(
-//   "APP.JS LOADED"
-// );
 
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import errorHandler from "./middleware/errorHandler.js";
 import notFound from "./middleware/notFound.js";
 
@@ -34,18 +36,10 @@ app.use(cookieParser());
 //   process.env.CLIENT_URL
 // );
 
-// app.use(
-//   cors({
-//     origin:
-//       process.env.CLIENT_URL,
-//     credentials: true,
-//   })
-// );
-
 app.use(
   cors({
     origin:
-      "http://localhost:5173",
+      process.env.CLIENT_URL,
     credentials: true,
   })
 );
@@ -91,12 +85,6 @@ app.use(
   reviewRoutes
 );
 
-// app.use("/api/auth", authRoutes);
-// app.use("/api/users", userRoutes);
-// app.use("/api/matches", matchRoutes);
-// app.use("/api/connections", connectionRoutes);
-// app.use("/api/chat", chatRoutes);
-// app.use("/api/reviews", reviewRoutes);
 
 /*
 |--------------------------------------------------------------------------
@@ -109,12 +97,5 @@ app.use(notFound);
 app.use(errorHandler);
 
 
-
-// app.use((req, res) => {
-//   res.status(404).json({
-//     success: false,
-//     message: "Route not found",
-//   });
-// });
 
 export default app;
