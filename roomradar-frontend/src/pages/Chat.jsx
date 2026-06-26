@@ -19,10 +19,18 @@ import {
   socket,
 } from "../socket/socket";
 
+import {
+  usePresence,
+} from "../context/PresenceContext";
+
 const Chat = () => {
 
   const { user } =
     useAuth();
+
+  const {
+    isOnline,
+  } = usePresence();
 
   const currentUserId =
     user?.id ||
@@ -280,13 +288,55 @@ const Chat = () => {
 
             {/* Header */}
 
-            <div className="bg-white border-b px-6 py-4 font-semibold text-lg">
+            <div className="bg-white border-b px-6 py-4">
 
-              {
-                selectedRoom.user.name
-              }
+  <div className="flex items-center justify-between">
 
-            </div>
+    <div>
+
+      <h2 className="text-lg font-semibold">
+
+        {selectedRoom.user.name}
+
+      </h2>
+
+      <div className="flex items-center gap-2 mt-1">
+
+        <span
+          className={`w-2.5 h-2.5 rounded-full ${
+            isOnline(
+              selectedRoom.user.id
+            )
+              ? "bg-green-500"
+              : "bg-gray-400"
+          }`}
+        />
+
+        <span
+          className={`text-sm ${
+            isOnline(
+              selectedRoom.user.id
+            )
+              ? "text-green-600"
+              : "text-gray-500"
+          }`}
+        >
+
+          {isOnline(
+            selectedRoom.user.id
+          )
+            ? "Online"
+            : "Offline"}
+
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
             {/* Messages */}
 

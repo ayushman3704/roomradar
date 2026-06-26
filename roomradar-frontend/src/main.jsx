@@ -9,6 +9,10 @@ import {
   AuthProvider,
 } from "./context/AuthContext";
 
+import {
+  PresenceProvider,
+} from "./context/PresenceContext";
+
 ReactDOM.createRoot(
   document.getElementById("root")
 ).render(
@@ -16,9 +20,13 @@ ReactDOM.createRoot(
 
     <AuthProvider>
 
-      <App />
+    <PresenceProvider>
 
-    </AuthProvider>
+        <App />
+
+    </PresenceProvider>
+
+</AuthProvider>
 
   </React.StrictMode>
 );

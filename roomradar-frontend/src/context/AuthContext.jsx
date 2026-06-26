@@ -39,8 +39,31 @@ export const AuthProvider = ({
             "/auth/me"
           );
 
-        setUser(
-  response.data.user
+        const user =
+  response.data.user;
+
+setUser(user);
+
+/*
+|--------------------------------------------------------------------------
+| Connect Socket
+|--------------------------------------------------------------------------
+*/
+
+if (!socket.connected) {
+
+  socket.connect();
+}
+
+/*
+|--------------------------------------------------------------------------
+| Register User
+|--------------------------------------------------------------------------
+*/
+
+socket.emit(
+  "register_user",
+  user._id
 );
 
 if (!socket.connected) {
@@ -96,7 +119,7 @@ const login =
 
       socket.disconnect();
 
-setUser(null);
+      setUser(null);
     };
 
   useEffect(() => {

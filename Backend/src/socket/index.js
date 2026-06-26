@@ -6,6 +6,12 @@ import Message
 import ChatRoom
   from "../models/ChatRoom.js";
 
+import {
+  addOnlineUser,
+  removeOnlineUser,
+  getOnlineUsers,
+} from "./presence.js";
+
 let io;
 
 /*
@@ -38,6 +44,57 @@ export const initializeSocket = (
   console.log(
     `Socket Connected: ${socket.id}`
   );
+
+  /*
+|--------------------------------------------------------------------------
+| Register User
+|--------------------------------------------------------------------------
+|
+| Called immediately after frontend connects.
+|
+*/
+
+socket.on(
+  "register_user",
+  (userId) => {
+
+    socket.userId = userId;
+
+    addOnlineUser(
+  userId,
+  socket.id
+);
+
+console.log(
+  `🟢 User Online: ${userId}`
+);
+
+/*
+|--------------------------------------------------------------------------
+| Send Current Online Users
+|--------------------------------------------------------------------------
+|
+| Only to the newly connected user.
+|
+*/
+
+socket.emit(
+  "online_users",
+  getOnlineUsers()
+);
+
+/*
+|--------------------------------------------------------------------------
+| Notify Everyone
+|--------------------------------------------------------------------------
+*/
+
+io.emit(
+  "user_online",
+  userId
+);
+  }
+);
 
   socket.on(
     "join_room",
@@ -134,15 +191,37 @@ const populatedMessage =
   }
 );
 
-  socket.on(
-    "disconnect",
-    () => {
+  /*
+|--------------------------------------------------------------------------
+| Disconnect Event
+|--------------------------------------------------------------------------
+*/
+
+socket.on(
+  "disconnect",
+  () => {
+
+    if (socket.userId) {
+
+      removeOnlineUser(
+        socket.userId
+      );
 
       console.log(
-        `Socket Disconnected: ${socket.id}`
+        `⚫ User Offline: ${socket.userId}`
+      );
+
+      io.emit(
+        "user_offline",
+        socket.userId
       );
     }
-  );
+
+    console.log(
+      `Socket Disconnected: ${socket.id}`
+    );
+  }
+);
 
 });
 
